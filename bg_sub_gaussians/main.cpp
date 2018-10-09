@@ -5,7 +5,7 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <opencv/cxcore.h>
-#include <opencv2/opencv.hpp>
+#include <opencv/cvaux.h>
 
 using namespace cv;
 
@@ -34,6 +34,9 @@ int main()
 	Ptr<BackgroundSubtractorMOG> pGMM;
 	pGMM = new BackgroundSubtractorMOG(history, n_mixtures, background_ratio, noise_sigma);
 
+	Ptr<BackgroundSubtractorMOG> pGMM_2;
+	pGMM = new BackgroundSubtractorMOG2(history, n_mixtures, background_ratio);
+
 	// Open video
 	// VideoCapture cap(0); //Webcam
 	VideoCapture cap("../data/Video.mp4");
@@ -49,11 +52,13 @@ int main()
 		cap >> frame;
 
 		// Apply the background subtraction
-		//pGMM->operator()(frame, fg, learning_rate);
+		pGMM->operator()(frame, fg, learning_rate);
+
 
 		// Show result
 		imshow("Original", frame);
-		//imshow("GMM", fg);
+		imshow("GMM", fg);
+		imshow("Background",)
 
 		waitKey(1);
 	}
