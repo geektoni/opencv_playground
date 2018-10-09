@@ -15,13 +15,14 @@ int main()
 	Mat bg, motion_mask, motion_threshold;
 
 	// Max number of frames
-	int nFrames = 10000;
+	int nFrames = 1000;
 
 	// Threshold
 	int thresh = 50;
 
 	// Video capture object
-	VideoCapture cap(0);
+	VideoCapture cap("../data/Video.mp4");
+	//VideoCapture cap(0);
 
 	// Check if cap was opened correctly
 	if (!cap.isOpened())
@@ -51,7 +52,7 @@ int main()
 		bg_update(frame_gray, &bg);
 
 		imshow("original", frame);
-		imshow("background", bg);
+		//imshow("background", bg);
 		imshow("threshold", motion_threshold);
 
 		waitKey(1);
