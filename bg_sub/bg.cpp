@@ -10,7 +10,7 @@ using namespace std;
 static int ctr = 1;
 
 /* Alpha value for ABS */
-static float alpha = 0.1;
+static float alpha = 0.01;
 
 void bg_train(Mat frame, Mat *background) {
 	if (ctr == 1)

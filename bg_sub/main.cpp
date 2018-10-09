@@ -52,7 +52,7 @@ int main()
 		bg_update(frame_gray, &bg);
 
 		imshow("original", frame);
-		//imshow("background", bg);
+		imshow("background", bg);
 		imshow("threshold", motion_threshold);
 
 		waitKey(1);
