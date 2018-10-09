@@ -15,7 +15,7 @@ int main()
 	Mat bg, motion_mask, motion_threshold;
 
 	// Max number of frames
-	int nFrames = 1000;
+	int nFrames = 10000;
 
 	// Threshold
 	int thresh = 50;
@@ -46,6 +46,9 @@ int main()
 
 		// We perform thresholding
 		threshold(motion_mask, motion_threshold, thresh, 255, THRESH_BINARY);
+
+		// Background update
+		bg_update(frame_gray, &bg);
 
 		imshow("original", frame);
 		imshow("background", bg);

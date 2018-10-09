@@ -19,5 +19,5 @@ void bg_train(Mat frame, Mat *background) {
 }
 
 void bg_update(Mat frame, Mat *background) {
-
+	frame.copyTo(*background);
 }
