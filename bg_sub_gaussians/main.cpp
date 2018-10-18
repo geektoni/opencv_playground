@@ -4,8 +4,10 @@
 
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
-#include <opencv/cxcore.h>
-#include <opencv/cvaux.h>
+#include <opencv2/opencv.hpp>
+//#include <opencv/cxcore.h>
+//#include <opencv/cvaux.h>
+#include <opencv2/bgsegm.hpp>
 
 using namespace cv;
 
@@ -31,11 +33,12 @@ int main()
 	double noise_sigma = 190;
 
 	// Initialization of GMM
-	Ptr<BackgroundSubtractorMOG> pGMM;
-	pGMM = new BackgroundSubtractorMOG(history, n_mixtures, background_ratio, noise_sigma);
+	Ptr<BackgroundSubtractor> pGMM;
+	//pGMM = createBackgroundSubtractorMOG(history, n_mixtures, background_ratio, noise_sigma);
+	pGMM = cv::bgsegm::createBackgroundSubtractorMOG();
 
-	Ptr<BackgroundSubtractorMOG> pGMM_2;
-	pGMM = new BackgroundSubtractorMOG2(history, n_mixtures, background_ratio);
+	//Ptr<BackgroundSubtractorMOG2> pGMM_2;
+	//pGMM = new BackgroundSubtractorMOG2(history, n_mixtures, background_ratio);
 
 	// Open video
 	// VideoCapture cap(0); //Webcam
@@ -52,13 +55,14 @@ int main()
 		cap >> frame;
 
 		// Apply the background subtraction
-		pGMM->operator()(frame, fg, learning_rate);
-
+		//pGMM->operator()(frame, fg, learning_rate);
+		pGMM->apply(frame, fg, learning_rate);
+		//pGMM->getBackgroundImage(fg);
 
 		// Show result
 		imshow("Original", frame);
 		imshow("GMM", fg);
-		imshow("Background",)
+		imshow("Background",bg);
 
 		waitKey(1);
 	}

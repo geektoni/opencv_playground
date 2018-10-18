@@ -21,8 +21,8 @@ int main()
 	int thresh = 50;
 
 	// Video capture object
-	VideoCapture cap("../data/Video.mp4");
-	//VideoCapture cap(0);
+	//VideoCapture cap("../data/Video.mp4");
+	VideoCapture cap(0);
 
 	// Check if cap was opened correctly
 	if (!cap.isOpened())
