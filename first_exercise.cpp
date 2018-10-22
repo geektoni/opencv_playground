@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
       absdiff(frames_gray[i], frames_gray[i - nDiff], motion_mask);
       threshold(motion_mask, threshold_mask, 50.0, 255, THRESH_BINARY);
       imshow("Motion Mask", motion_mask);
-      imshow("Threshold", threshold_mask);
+	  imshow("Threshold", threshold_mask);
     }
 
     waitKey(1);

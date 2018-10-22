@@ -4,10 +4,8 @@
 
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
-#include <opencv2/opencv.hpp>
-//#include <opencv/cxcore.h>
-//#include <opencv/cvaux.h>
-#include <opencv2/bgsegm.hpp>
+#include <opencv/cxcore.h>
+#include <opencv/cvaux.h>
 
 using namespace cv;
 
@@ -29,19 +27,18 @@ int main()
 	double learning_rate = 0.1;
 	int history = 300; // How many previous iterations influence the model at this time step.
 	int n_mixtures = 200;
-	double background_ratio = 0.001;
+	double background_ratio = 0.1;
 	double noise_sigma = 190;
 
 	// Initialization of GMM
-	Ptr<BackgroundSubtractor> pGMM;
-	//pGMM = createBackgroundSubtractorMOG(history, n_mixtures, background_ratio, noise_sigma);
-	pGMM = cv::bgsegm::createBackgroundSubtractorMOG();
+	//Ptr<BackgroundSubtractor> pGMM;
+	//pGMM = new BackgroundSubtractorMOG(history, n_mixtures, background_ratio, noise_sigma);
 
-	//Ptr<BackgroundSubtractorMOG2> pGMM_2;
-	//pGMM = new BackgroundSubtractorMOG2(history, n_mixtures, background_ratio);
+	Ptr<BackgroundSubtractor> pGMM;
+	pGMM = new BackgroundSubtractorMOG2(history, n_mixtures, background_ratio);
 
 	// Open video
-	// VideoCapture cap(0); //Webcam
+	//VideoCapture cap(0); //Webcam
 	VideoCapture cap("../data/Video.mp4");
 
 	// Check if the video was correctly opened
@@ -55,9 +52,8 @@ int main()
 		cap >> frame;
 
 		// Apply the background subtraction
-		//pGMM->operator()(frame, fg, learning_rate);
-		pGMM->apply(frame, fg, learning_rate);
-		//pGMM->getBackgroundImage(fg);
+		pGMM->operator()(frame, fg, learning_rate);
+		pGMM->getBackgroundImage(bg);
 
 		// Show result
 		imshow("Original", frame);
