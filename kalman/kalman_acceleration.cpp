@@ -35,14 +35,15 @@ int main () {
 
 	// Our Kalman filter
 	// M = [x_m, y_m]
-	// S = [x, y, v_x, v_y] (we record the velocity in both directions)
-	KalmanFilter KF(4,2,0);
+	// S = [x, y, v_x, v_y, a_x, a_y] (we record the velocity in both directions
+	// and the acceleration)
+	KalmanFilter KF(6,2,0);
 
 	// Matrices that will contain the state
 	// and the noise. Here we show two ways to
 	// create a matrix containing floats.
-	Mat_<float> state(4,1);
-	Mat processNoise(4,1, CV_32F);
+	Mat_<float> state(6,1);
+	Mat processNoise(6,1, CV_32F);
 
 	// Contains the position of the mouse. Kalman does
 	// not require the initial position, but we need to set
@@ -56,29 +57,37 @@ int main () {
 	setMouseCallback("Kalman", on_mouse, 0);
 
 	// Set up the initial state of the Kalman filter
-	// (we do not set the velocity).
+	// (we do not set the velocity nor the acceleration).
 	KF.statePre.at<float>(0) = mouse_info.x;
 	KF.statePre.at<float>(1) = mouse_info.y;
 	KF.statePre.at<float>(2) = 0;
 	KF.statePre.at<float>(3) = 0;
+	KF.statePre.at<float>(4) = 0;
+	KF.statePre.at<float>(5) = 0;
 
 	// We need then to define the transition matrix.
 	// It has to be 4x4 in order to get the following equations:
-	// -> x = x_0 + t*v_x
-	// -> y = y_0 + t*v_y
-	// -> v_x = v_0x
-	// -> v_u = v_0y
+	// -> x = x_0 + t*v_x + 1/2*a_x*t^2
+	// -> y = y_0 + t*v_y + 1/2*a_y*t^2
+	// -> v_xt+1 = v_tx+a_xt
+	// -> v_ut+1 = v_ty+a_yt
+	// -> a_xt+1 = a_xt
+	// -> a_yt+1 = a_yt+1
 	// Therefore, T must be:
-	// 1 0 1 0
-	// 0 1 0 1
-	// 0 0 1 0
-	// 0 0 0 1
+	// 1 0 1 0 1/2 0
+	// 0 1 0 1 0 1/2
+	// 0 0 1 0 0 0
+	// 0 0 0 1 0 0
+	// 0 0 0 0 1 0
+	// 0 0 0 0 0 1
 	// such that T*S will give us those equations.
-	KF.transitionMatrix = *(Mat_<float>(4,4) <<
-	1,0,1,0,
-	0,1,0,1,
-	0,0,1,0,
-	0,0,0,1);
+	KF.transitionMatrix = *(Mat_<float>(6,6) <<
+	1,0,1,0,0.5,0,
+	0,1,0,1,0,0.5,
+	0,0,1,0,1,0,
+	0,0,0,1,0,1,
+	0,0,0,0,1,0,
+	0,0,0,0,0,1);
 
 	// Set the measurement function to the identity
 	// and to the process noise covariance. The covariance

@@ -8,6 +8,7 @@ add_executable(background_sub bg_sub/main.cpp bg_sub/bg.cpp)
 add_executable(background_sub_gauss bg_sub_gaussians/main.cpp bg_sub_gaussians/bg.cpp)
 add_executable(mean_shift meanshift/meanShift_start.cpp)
 add_executable(kalman kalman/KalmanFilter_start.cpp)
+add_executable(kalman_acc kalman/kalman_acceleration.cpp)
 
 include_directories("/usr/local/include")
 link_directories("/usr/local/lib")
@@ -17,3 +18,4 @@ target_link_libraries(background_sub opencv_highgui opencv_core opencv_imgproc o
 target_link_libraries(background_sub_gauss opencv_highgui opencv_core opencv_imgproc opencv_video)
 target_link_libraries(mean_shift opencv_highgui opencv_core opencv_imgproc opencv_video)
 target_link_libraries(kalman opencv_highgui opencv_core opencv_imgproc opencv_video)
+target_link_libraries(kalman_acc opencv_highgui opencv_core opencv_imgproc opencv_video)
