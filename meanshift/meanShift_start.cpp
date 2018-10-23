@@ -5,6 +5,11 @@
  *      Author: mmlab
  */
 
+// MeanShift is useful when the video we are analyzing
+// contains elements (people) which have the same size
+// during all the course of the video. CamShift can be
+// used when the targets change size during the video.
+
 #include <opencv2/opencv.hpp>
 
 using namespace cv;
