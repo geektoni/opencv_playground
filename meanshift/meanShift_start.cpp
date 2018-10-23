@@ -64,7 +64,7 @@ int main( int argc, const char** argv )
 	CommandLineParser parser(argc, argv, keys);
 
 	cap.open(0);
-	//cap.open("Video.mp4");
+	//cap.open("../data/Video.mp4");
 
 	if( !cap.isOpened() )
 	{
@@ -133,7 +133,11 @@ int main( int argc, const char** argv )
 
 				backproj = mask;
 
-				int iter = meanShift(backproj, trackWindow, TermCriteria(TermCriteria::EPS|TermCriteria::COUNT, 10, 1));
+				//int iter = meanShift(backproj, trackWindow, TermCriteria(TermCriteria::EPS|TermCriteria::COUNT, 10, 1));
+
+				//Cam Shift
+				RotatedRect trackbox = CamShift(backproj, trackWindow, TermCriteria(TermCriteria::EPS|TermCriteria::COUNT, 10, 1));
+
 				if (trackWindow.area() <= 1){
 					int cols = backproj.cols;
 					int rows = backproj.rows;
@@ -141,7 +145,8 @@ int main( int argc, const char** argv )
 
 					trackWindow = Rect(trackWindow.x - r, trackWindow.y - r, trackWindow.x + r, trackWindow.y + r) & Rect(0,0,cols, rows);
 				}
-				rectangle(image, trackWindow, Scalar(0,0,255), 3, CV_AA);
+				//rectangle(image, trackWindow, Scalar(0,0,255), 3, CV_AA);
+				ellipse(image, trackbox, Scalar(0,0,255), 3, CV_AA);
 			}
 		}
 		else if( trackObject < 0 )
