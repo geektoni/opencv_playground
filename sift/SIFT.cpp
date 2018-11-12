@@ -14,6 +14,8 @@ using namespace cv;
 int main()
 {
 
+	// Read the images with 1 channel only (by putting
+	// 0 as additional parameter)
   Mat img_object = imread("../data/box.png",0);
   Mat img_scene = imread("../data/box_in_scene.png",0);
 
@@ -96,10 +98,16 @@ int main()
 
 	imshow("result", result);
 
+	// Generate the mask needed. The mask has still some
+	// noise which could be removed with a dilation.
 	Mat result_mask = Mat::zeros(result.size(), CV_8UC1);
 	result_mask.setTo(255, result != 0);
 
 	imshow("mask", result_mask);
+
+	// Paste the resulting mask onto the original image
+	result.copyTo(img_scene, result_mask);
+	imshow("final_result", img_scene);
 
 	waitKey(0);
 
