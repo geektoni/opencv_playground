@@ -15,6 +15,8 @@ String face_cascade_name = "../data/haarcascade_frontalface_alt.xml";
 CascadeClassifier face_cascade;
 
 // ViolaJones algorithm
+// The results are robust, however, as soon as there are some occlusions
+// or the target starts to turn around, the algorithm is not working anymore.
 int main(int argc, char ** argv)
 {
 	VideoCapture cap(0);
