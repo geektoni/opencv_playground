@@ -68,8 +68,8 @@ int main( int argc, const char** argv )
 	const float* phranges = hranges;
 	CommandLineParser parser(argc, argv, keys);
 
-	cap.open(0);
-	//cap.open("../data/Video.mp4");
+	//cap.open(0);
+	cap.open("../data/Video.mp4");
 
 	if( !cap.isOpened() )
 	{

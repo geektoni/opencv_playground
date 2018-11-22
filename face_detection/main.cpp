@@ -17,6 +17,8 @@ CascadeClassifier face_cascade;
 // ViolaJones algorithm
 // The results are robust, however, as soon as there are some occlusions
 // or the target starts to turn around, the algorithm is not working anymore.
+// Use haarcascade_profileface.xml to implements a profile recognizer, and print
+// the results with a different color.
 int main(int argc, char ** argv)
 {
 	VideoCapture cap(0);

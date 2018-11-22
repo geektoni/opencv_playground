@@ -12,6 +12,7 @@ add_executable(kalman_acc kalman/kalman_acceleration.cpp)
 add_executable(sift sift/SIFT.cpp)
 add_executable(hog hog/HOG.cpp)
 add_executable(face face_detection/main.cpp)
+add_executable(lukaskanade GFTT+LKOF/lucaskanade.cpp)
 
 include_directories("/usr/local/include")
 link_directories("/usr/local/lib")
@@ -25,3 +26,4 @@ target_link_libraries(kalman_acc opencv_highgui opencv_core opencv_imgproc openc
 target_link_libraries(hog opencv_highgui opencv_core opencv_imgproc opencv_video opencv_features2d opencv_nonfree opencv_calib3d opencv_objdetect)
 target_link_libraries(sift opencv_highgui opencv_core opencv_imgproc opencv_video opencv_features2d opencv_nonfree opencv_calib3d)
 target_link_libraries(face opencv_highgui opencv_core opencv_imgproc opencv_video opencv_features2d opencv_nonfree opencv_calib3d opencv_objdetect)
+target_link_libraries(lukaskanade opencv_highgui opencv_core opencv_imgproc opencv_video opencv_features2d opencv_nonfree opencv_calib3d opencv_objdetect)
